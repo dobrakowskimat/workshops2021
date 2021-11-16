@@ -1,0 +1,11 @@
+<div>user-list works!</div>
+<div class="btn btn-primary" (click)="warnUser()">click me!</div>
+<input [(ngModel)]="userName" />
+
+<p>{{ userName }}</p>
+
+<div (click)="toggleWarning()">click me because im pretty!</div>
+
+<div *ngIf="isWarningVisible">
+  You clicked that div! You gonna be cursed forever!
+</div>
