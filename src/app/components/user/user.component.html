@@ -1,0 +1,7 @@
+<div class="container">
+  <div>{{ user.id }}</div>
+  <div>{{ user.firstName }}</div>
+  <div>{{ user.lastName }}</div>
+  <div>{{ user.dateOfBirth | date: "dd/MM/yyyy" }}</div>
+  <div (click)="delete(user)">[x]</div>
+</div>
