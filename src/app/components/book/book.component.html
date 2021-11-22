@@ -1,0 +1,8 @@
+<p>{{bookListName}}</p>
+<label for="book-name">Nazwa ksiązki</label>
+<input type="text" id="book-name" #name/> <br>
+<label for="book-id">Id książki</label>
+<input type="number" id="book-id" #id/> <br>
+<label for="book-price">Cena książki</label>
+<input type="number" id="book-price" #cost/> <br>
+<button (click)="addBook(id.value, name.value, cost.value)">Dodaj do koszyka</button>

@@ -9,3 +9,12 @@
 <div *ngIf="isWarningVisible">
   You clicked that div! You gonna be cursed forever!
 </div>
+
+<ng-container *ngIf="users$ | async as users">
+
+  <app-user
+  *ngFor="let user of users"
+  [user]="user"
+  (deleted)="delete($event)">
+  </app-user>
+</ng-container>

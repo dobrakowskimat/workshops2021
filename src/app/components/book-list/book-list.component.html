@@ -1,0 +1,7 @@
+<app-book [bookListName]="Name" (newBookEvent)="addBook($event)"></app-book>
+<ul>
+  <li *ngFor="let book of books">
+    Id: {{ book.id }}
+    Nazwa: {{ book.name }}
+    Cena: {{ book.cost }}</li>
+</ul>

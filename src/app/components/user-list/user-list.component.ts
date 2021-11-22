@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { User } from 'src/app/models/user';
+import { users } from 'src/app/models/user.mock';
 
 @Component({
   selector: 'app-user-list',
@@ -8,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class UserListComponent implements OnInit {
   userName = 'Mateusz';
   isWarningVisible = false;
+  users$: Observable<Array<User>> = of(users);
   constructor() {}
   ngOnInit(): void {}
 
@@ -17,5 +21,9 @@ export class UserListComponent implements OnInit {
 
   toggleWarning() {
     this.isWarningVisible = !this.isWarningVisible;
+  }
+
+  delete(user: User) {
+    // this.users = this.users.filter( (u) => u.id !== user.id )
   }
 }
