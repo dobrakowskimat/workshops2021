@@ -8,13 +8,13 @@ import { User } from 'src/app/models/user';
 })
 export class UserComponent implements OnInit {
   @Input() user!: User;
-  @Output() deleted = new EventEmitter<User>();
+  @Output() userDeleted = new EventEmitter<number>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  delete(user: User) {
-    this.deleted.emit(user);
+  deleteUser(id: number) {
+    this.userDeleted.emit(id);
   }
 }
