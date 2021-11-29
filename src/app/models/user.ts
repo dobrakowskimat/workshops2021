@@ -2,5 +2,12 @@ export interface User {
   firstName: string;
   lastName: string;
   id: number;
-  dateOfBirth: Date;
+  email: string;
+}
+
+export interface UserView {
+  firstName: string;
+  lastName: string;
+  id: number;
+  email: string;
 }

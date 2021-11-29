@@ -1,18 +1,5 @@
-<div>user-list works!</div>
-<div class="btn btn-primary" (click)="warnUser()">click me!</div>
-<input [(ngModel)]="userName" />
-
-<p>{{ userName }}</p>
-
-<div (click)="toggleWarning()">click me because im pretty!</div>
-
-<div *ngIf="isWarningVisible">
-  You clicked that div! You gonna be cursed forever!
+<div *ngIf="users$ | async as users">
+  <div *ngFor="let user of users">
+    <app-user [user]="user" (userDeleted)="deleteUser($event)"></app-user>
+  </div>
 </div>
-<ng-container *ngIf="users$ | async as users">
-  <app-user
-    *ngFor="let user of users"
-    [user]="user"
-    (deleted)="delete($event)"
-  ></app-user>
-</ng-container>
