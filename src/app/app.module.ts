@@ -10,6 +10,9 @@ import { UserComponent } from './components/user/user.component';
 import { BookComponent } from './components/book/book.component';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EditBookFormComponent } from './components/edit-book-form/edit-book-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -18,13 +21,16 @@ import { HttpClientModule } from '@angular/common/http';
     UserComponent,
     BookComponent,
     BookListComponent,
+    EditBookFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
