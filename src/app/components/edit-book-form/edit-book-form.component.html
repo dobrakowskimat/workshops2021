@@ -1,0 +1,28 @@
+<form [formGroup]="bookForm">
+  <div>
+    <label for="title">Book title</label>
+    <input type="text" formControlName="title"/>
+  </div>
+
+  <div>
+    <label for="authorFirstName">Author first name</label>
+    <input type="text" formControlName="authorFirstName"/>
+  </div>
+
+  <div>
+    <label for="authorLastName">Author last name</label>
+    <input type="text" formControlName="authorLastName"/>
+  </div>
+
+  <div>
+    <label for="publicationDateUtc">Publication date</label>
+    <input type="text" formControlName="publicationDateUtc"/>
+  </div>
+
+  <div>
+    <label for="isbn">Isbn</label>
+    <input type="text" formControlName="isbn"/>
+  </div>
+
+  <button class="button" type="submit" (click)="addBook()">Add new book</button>
+</form>

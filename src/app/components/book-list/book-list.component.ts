@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BookView } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
+import { EditBookFormComponent } from '../edit-book-form/edit-book-form.component';
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-book-list',
@@ -12,7 +14,7 @@ import { BookService } from 'src/app/services/book.service';
 export class BookListComponent implements OnInit {
   books$: Observable<BookView[]>;
 
-  constructor(private readonly bookService: BookService) {
+  constructor(private readonly bookService: BookService, public matDialog: MatDialog) {
     this.books$ = this.bookService.getBooks().pipe(
       map((books) =>
         books.map((b) => {
@@ -27,6 +29,10 @@ export class BookListComponent implements OnInit {
 
   deleteBook(id: number) {
     this.bookService.deleteBook(id).subscribe();
+  }
+
+  openAddBookModal() {
+    this.matDialog.open(EditBookFormComponent, {data: {bookId: 0}});
   }
 
   ngOnInit(): void {}
