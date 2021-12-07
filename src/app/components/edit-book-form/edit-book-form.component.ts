@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Book } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
@@ -16,14 +21,15 @@ export class EditBookFormComponent implements OnInit {
   constructor(
     private bookService: BookService,
     @Inject(MAT_DIALOG_DATA) public data: { id: number | null },
-    public dialogRef: MatDialogRef<EditBookFormComponent>
+    public dialogRef: MatDialogRef<EditBookFormComponent>,
+    private fb: FormBuilder
   ) {
-    this.bookForm = new FormGroup({
-      title: new FormControl(''),
-      authorFirstName: new FormControl(''),
-      authorLastName: new FormControl(''),
-      publicationDateUtc: new FormControl(''),
-      isbn: new FormControl(''),
+    this.bookForm = this.fb.group({
+      title: ['', Validators.required],
+      authorFirstName: [''],
+      authorLastName: [''],
+      publicationDateUtc: [''],
+      isbn: [''],
     });
   }
 

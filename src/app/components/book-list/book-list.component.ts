@@ -23,7 +23,7 @@ export class BookListComponent implements OnInit {
     private readonly bookService: BookService,
     public matDialog: MatDialog
   ) {
-    this.booksOutDated$ = this.bookService.booksOutdated$;
+    this.booksOutDated$ = this.bookService.booksOutdated$ as Observable<void>;
 
     this.books$ = this.booksOutDated$.pipe(
       switchMap(() =>
