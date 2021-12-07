@@ -39,7 +39,7 @@ export class EditBookFormComponent implements OnInit {
     this.isLoading = true;
     if (!!this.data.id) {
       this.bookService
-        .editBook(this.bookForm.value)
+        .editBook({ ...this.bookForm.value, id: this.data.id })
         .subscribe((r) => this.dialogRef.close());
     } else {
       this.bookService

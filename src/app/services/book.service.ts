@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Book } from '../models/book';
 
@@ -9,6 +9,7 @@ import { Book } from '../models/book';
   providedIn: 'root',
 })
 export class BookService {
+  booksOutdated$ = new BehaviorSubject<void>(0 as unknown as void);
   constructor(private readonly httpClient: HttpClient) {}
 
   getBooks(): Observable<Book[]> {
@@ -28,12 +29,22 @@ export class BookService {
   addBook(book: Book): Observable<Book> {
     return this.httpClient
       .post<Book>(`${environment.apiUrl}api/Books`, book)
-      .pipe(delay(500));
+      .pipe(
+        delay(500),
+        tap(() => {
+          this.booksOutdated$.next();
+        })
+      );
   }
 
   editBook(book: Book): Observable<Book> {
     return this.httpClient
       .put<Book>(`${environment.apiUrl}api/Books/${book.id}`, book)
-      .pipe(delay(500));
+      .pipe(
+        delay(500),
+        tap(() => {
+          this.booksOutdated$.next();
+        })
+      );
   }
 }

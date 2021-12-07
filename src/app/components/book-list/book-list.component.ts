@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { BookView } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
 
@@ -18,19 +18,25 @@ import { EditBookFormComponent } from '../edit-book-form/edit-book-form.componen
 })
 export class BookListComponent implements OnInit {
   books$: Observable<BookView[]>;
-
+  booksOutDated$: Observable<void>;
   constructor(
     private readonly bookService: BookService,
     public matDialog: MatDialog
   ) {
-    this.books$ = this.bookService.getBooks().pipe(
-      map((books) =>
-        books.map((b) => {
-          return {
-            ...b,
-            author: `${b.authorFirstName} ${b.authorLastName}`,
-          };
-        })
+    this.booksOutDated$ = this.bookService.booksOutdated$;
+
+    this.books$ = this.booksOutDated$.pipe(
+      switchMap(() =>
+        this.bookService.getBooks().pipe(
+          map((books) =>
+            books.map((b) => {
+              return {
+                ...b,
+                author: `${b.authorFirstName} ${b.authorLastName}`,
+              };
+            })
+          )
+        )
       )
     );
   }
