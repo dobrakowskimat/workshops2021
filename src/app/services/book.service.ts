@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Book } from '../models/book';
 
@@ -23,6 +23,12 @@ export class BookService {
   deleteBook(id: number): Observable<unknown> {
     return this.httpClient.delete<unknown>(
       `${environment.apiUrl}api/Books/${id}`
+    );
+  }
+
+  isTitleDuplicated(title: string): Observable<boolean> {
+    return this.getBooks().pipe(
+      map((books) => books.some((book) => book.title === title))
     );
   }
 

@@ -1,11 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {
+  AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Book } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
 
@@ -18,6 +24,8 @@ export class EditBookFormComponent implements OnInit {
   bookForm: FormGroup;
   isLoading = false;
 
+  localTitle: string = '';
+
   constructor(
     private bookService: BookService,
     @Inject(MAT_DIALOG_DATA) public data: { id: number | null },
@@ -25,11 +33,18 @@ export class EditBookFormComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.bookForm = this.fb.group({
-      title: ['', Validators.required],
+      title: [
+        '',
+        {
+          validators: [Validators.required, Validators.minLength(2)],
+          asyncValidators: (c: AbstractControl) => this.notDuplicated(c),
+          updateOn: 'blur',
+        },
+      ],
       authorFirstName: [''],
       authorLastName: [''],
       publicationDateUtc: [''],
-      isbn: [''],
+      isbn: ['', [Validators.required, this.validateIsbnWithParam('123')]],
     });
   }
 
@@ -39,9 +54,19 @@ export class EditBookFormComponent implements OnInit {
         .getBookById(this.data.id)
         .subscribe((b) => this.bookForm.patchValue(b));
     }
+
+    this.bookForm.controls.title.valueChanges.subscribe((value) => {
+      if (value === 'Email') {
+        this.bookForm.addControl('email', this.fb.control(''));
+      }
+    });
   }
 
   onSubmit() {
+    if (!this.bookForm.valid) {
+      return;
+    }
+
     this.isLoading = true;
     if (!!this.data.id) {
       this.bookService
@@ -52,5 +77,51 @@ export class EditBookFormComponent implements OnInit {
         .addBook(this.bookForm.value)
         .subscribe((r) => this.dialogRef.close());
     }
+  }
+
+  private validateIsbn(control: AbstractControl): ValidationErrors | null {
+    const isbn = control.value as string;
+
+    if (!isbn) {
+      return null;
+    }
+
+    if (isbn.startsWith('978')) {
+      return null;
+    }
+
+    return { invalidPrefix: true };
+  }
+
+  private validateIsbnWithParam(requiredPrefix: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isbn = control.value as string;
+
+      if (!isbn) {
+        return null;
+      }
+
+      if (isbn.startsWith(requiredPrefix)) {
+        return null;
+      }
+
+      return { invalidPrefix: true };
+    };
+  }
+
+  private notDuplicated(
+    control: AbstractControl
+  ): Observable<ValidationErrors | null> {
+    const title = control.value as string;
+
+    if (!title) {
+      return of(null);
+    }
+
+    return this.bookService
+      .isTitleDuplicated(title)
+      .pipe(
+        map((isDuplicated) => (isDuplicated ? { duplicatedTitle: true } : null))
+      );
   }
 }
