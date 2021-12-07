@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Book } from '../models/book';
 
@@ -25,13 +26,14 @@ export class BookService {
   }
 
   addBook(book: Book): Observable<Book> {
-    return this.httpClient.post<Book>(`${environment.apiUrl}api/Books`, book);
+    return this.httpClient
+      .post<Book>(`${environment.apiUrl}api/Books`, book)
+      .pipe(delay(500));
   }
 
   editBook(book: Book): Observable<Book> {
-    return this.httpClient.put<Book>(
-      `${environment.apiUrl}api/Books/${book.id}`,
-      book
-    );
+    return this.httpClient
+      .put<Book>(`${environment.apiUrl}api/Books/${book.id}`, book)
+      .pipe(delay(500));
   }
 }

@@ -40,7 +40,7 @@ export class BookListComponent implements OnInit {
   }
 
   openAddBookModal() {
-    this.matDialog.open(EditBookFormComponent, { data: { bookId: 0 } });
+    this.matDialog.open(EditBookFormComponent, { data: { id: null } });
   }
 
   ngOnInit(): void {}
