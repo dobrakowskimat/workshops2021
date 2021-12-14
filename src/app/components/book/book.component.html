@@ -3,6 +3,10 @@
   <div>{{ book.author }}</div>
   <div>{{ book.isbn }}</div>
   <div>{{ book.publicationDateUtc }}</div>
+  <div>
+    Tags:
+    <span *ngFor="let tag of book.tags" class="tag">{{tag}}</span>
+  </div>
   <div (click)="openEditBookModal(book.id)">[[ EDIT ]]</div>
   <div (click)="deleteBook(book.id)">[[ x ]]</div>
 </div>

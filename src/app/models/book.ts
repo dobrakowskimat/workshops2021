@@ -5,6 +5,7 @@ export interface Book {
   authorLastName: string;
   publicationDateUtc: string;
   isbn: string;
+  tags: string[];
 }
 
 export interface BookView {
@@ -13,4 +14,5 @@ export interface BookView {
   author: string;
   publicationDateUtc: string;
   isbn: string;
+  tags: string[];
 }
