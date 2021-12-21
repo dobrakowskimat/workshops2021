@@ -16,8 +16,10 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  deleteBook(id: number) {
-    this.bookDeleted.emit(id);
+  deleteBook(id: number, title: string) {
+    if (confirm(`Are you sure you want to remove book '${title}'?`)) {
+      this.bookDeleted.emit(id);
+    }
   }
 
   openEditBookModal(id: number) {

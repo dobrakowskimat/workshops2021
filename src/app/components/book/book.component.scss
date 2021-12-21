@@ -5,3 +5,20 @@
   color: rgb(77, 77, 77);
   padding: 2px 4px 2px 4px;
 }
+
+.book {
+  margin: 5px;
+  margin-bottom: 20px;
+  & .title {
+    font-weight: bold;
+  }
+
+  & .buttons span {
+    margin-right: 10px;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid gray;
+  }
+}
+

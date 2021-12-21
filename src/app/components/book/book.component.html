@@ -1,12 +1,14 @@
-<div>
-  <div>{{ book.title }}</div>
-  <div>{{ book.author }}</div>
-  <div>{{ book.isbn }}</div>
-  <div>{{ book.publicationDateUtc }}</div>
-  <div>
+<div class="book">
+  <div class="title">{{ book.title }}</div>
+  <div>Author: {{ book.author }}</div>
+  <div>ISBN: {{ book.isbn }}</div>
+  <div>Publication date: {{ book.publicationDateUtc }}</div>
+  <div *ngIf="book.tags.length">
     Tags:
     <span *ngFor="let tag of book.tags" class="tag">{{tag}}</span>
   </div>
-  <div (click)="openEditBookModal(book.id)">[[ EDIT ]]</div>
-  <div (click)="deleteBook(book.id)">[[ x ]]</div>
+  <div class="buttons">
+    <span (click)="openEditBookModal(book.id)">EDIT</span>
+    <span (click)="deleteBook(book.id, book.title)">DELETE</span>
+  </div>
 </div>
