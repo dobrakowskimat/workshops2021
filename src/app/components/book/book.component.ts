@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Book, BookView } from 'src/app/models/book';
-import { EditBookFormComponent } from '../edit-book-form/edit-book-form.component';
-
+import { EditBookDialogWrapperComponent } from '../edit-book-dialog-wrapper/edit-book-dialog-wrapper.component';
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
@@ -23,6 +22,6 @@ export class BookComponent implements OnInit {
   }
 
   openEditBookModal(id: number) {
-    this.matDialog.open(EditBookFormComponent, { data: { id: id } });
+    this.matDialog.open(EditBookDialogWrapperComponent, { data: { id: id } });
   }
 }
