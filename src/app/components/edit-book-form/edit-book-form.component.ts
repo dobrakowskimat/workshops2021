@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -24,14 +25,11 @@ export class EditBookFormComponent implements OnInit {
 
   localTitle: string = '';
 
-  @Input() id: number|null = null;
+  @Input() id: number | null = null;
 
   @Output() formSubmitted = new EventEmitter<void>();
 
-  constructor(
-    private bookService: BookService,
-    private fb: FormBuilder
-  ) {
+  constructor(private bookService: BookService, private fb: FormBuilder) {
     this.bookForm = this.fb.group({
       title: [
         '',
@@ -45,14 +43,16 @@ export class EditBookFormComponent implements OnInit {
       authorLastName: [''],
       publicationDateUtc: [''],
       isbn: ['', [Validators.required, this.validateIsbnWithParam('123')]],
+      tags: this.fb.array([]),
     });
   }
 
   ngOnInit(): void {
     if (this.id) {
-      this.bookService
-        .getBookById(this.id)
-        .subscribe((b) => this.bookForm.patchValue(b));
+      this.bookService.getBookById(this.id).subscribe((b) => {
+        b.tags.forEach(() => this.addTag());
+        this.bookForm.patchValue(b);
+      });
     }
 
     this.bookForm.controls.title.valueChanges.subscribe((value) => {
@@ -60,6 +60,19 @@ export class EditBookFormComponent implements OnInit {
         this.bookForm.addControl('email', this.fb.control(''));
       }
     });
+  }
+
+  get tags(): FormArray {
+    return this.bookForm.get('tags') as FormArray;
+  }
+
+  addTag(): void {
+    const tagControl = this.fb.control('');
+    this.tags.push(tagControl);
+  }
+
+  removeTag(index: number): void {
+    this.tags.removeAt(index);
   }
 
   onSubmit() {
