@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -9,10 +9,8 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Book } from 'src/app/models/book';
+import { map, tap } from 'rxjs/operators';
 import { BookService } from 'src/app/services/book.service';
 
 @Component({
@@ -26,10 +24,12 @@ export class EditBookFormComponent implements OnInit {
 
   localTitle: string = '';
 
+  @Input() id: number|null = null;
+
+  @Output() formSubmitted = new EventEmitter<void>();
+
   constructor(
     private bookService: BookService,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number | null },
-    public dialogRef: MatDialogRef<EditBookFormComponent>,
     private fb: FormBuilder
   ) {
     this.bookForm = this.fb.group({
@@ -49,9 +49,9 @@ export class EditBookFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.data.id) {
+    if (this.id) {
       this.bookService
-        .getBookById(this.data.id)
+        .getBookById(this.id)
         .subscribe((b) => this.bookForm.patchValue(b));
     }
 
@@ -68,14 +68,16 @@ export class EditBookFormComponent implements OnInit {
     }
 
     this.isLoading = true;
-    if (!!this.data.id) {
+    if (!!this.id) {
       this.bookService
-        .editBook({ ...this.bookForm.value, id: this.data.id })
-        .subscribe((r) => this.dialogRef.close());
+        .editBook({ ...this.bookForm.value, id: this.id })
+        .pipe(tap(() => this.formSubmitted.emit()))
+        .subscribe();
     } else {
       this.bookService
         .addBook(this.bookForm.value)
-        .subscribe((r) => this.dialogRef.close());
+        .pipe(tap(() => this.formSubmitted.emit()))
+        .subscribe();
     }
   }
 

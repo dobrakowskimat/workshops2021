@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { EditBookDialogWrapperComponent } from './components/edit-book-dialog-wrapper/edit-book-dialog-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
     BookComponent,
     BookListComponent,
     EditBookFormComponent,
+    EditBookDialogWrapperComponent,
   ],
   imports: [
     BrowserModule,

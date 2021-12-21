@@ -5,11 +5,9 @@ import { BookView } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
 
 import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
+  MatDialog
 } from '@angular/material/dialog';
-import { EditBookFormComponent } from '../edit-book-form/edit-book-form.component';
+import { EditBookDialogWrapperComponent } from '../edit-book-dialog-wrapper/edit-book-dialog-wrapper.component';
 
 @Component({
   selector: 'app-book-list',
@@ -46,7 +44,7 @@ export class BookListComponent implements OnInit {
   }
 
   openAddBookModal() {
-    this.matDialog.open(EditBookFormComponent, { data: { id: null } });
+    this.matDialog.open(EditBookDialogWrapperComponent, { data: { id: null } });
   }
 
   ngOnInit(): void {}
