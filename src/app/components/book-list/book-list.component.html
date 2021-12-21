@@ -1,4 +1,6 @@
-<div (click)="openAddBookModal()">Add Book</div>
+<div>
+  <span class="button"(click)="openAddBookModal()">Add Book </span>
+</div>
 <div *ngIf="books$ | async as books">
   <div *ngFor="let book of books">
     <app-book [book]="book" (bookDeleted)="deleteBook($event)"></app-book>
