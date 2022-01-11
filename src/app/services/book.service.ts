@@ -26,31 +26,11 @@ export class BookService {
     );
   }
 
-  isTitleDuplicated(title: string): Observable<boolean> {
-    return this.getBooks().pipe(
-      map((books) => books.some((book) => book.title === title))
-    );
-  }
-
   addBook(book: Book): Observable<Book> {
-    return this.httpClient
-      .post<Book>(`${environment.apiUrl}api/Books`, book)
-      .pipe(
-        delay(500),
-        tap(() => {
-          this.booksOutdated$.next();
-        })
-      );
+    return this.httpClient.post<Book>(`${environment.apiUrl}api/Books`, book);
   }
 
   editBook(book: Book): Observable<Book> {
-    return this.httpClient
-      .put<Book>(`${environment.apiUrl}api/Books/${book.id}`, book)
-      .pipe(
-        delay(500),
-        tap(() => {
-          this.booksOutdated$.next();
-        })
-      );
+    return this.httpClient.put<Book>(`${environment.apiUrl}api/Books/${book.id}`, book);
   }
 }

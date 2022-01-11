@@ -1,0 +1,5 @@
+<div *ngIf="users$ | async as users">
+  <div *ngFor="let user of users">
+    <app-user [user]="user" (userDeleted)="deleteUser($event)"></app-user>
+  </div>
+</div>
