@@ -8,7 +8,7 @@
     <span *ngFor="let tag of book.tags" class="tag">{{tag}}</span>
   </div>
   <div>
-    <span class="button" (click)="openEditBookModal(book.id)">EDIT</span>
+    <a class="button" [routerLink]="['edit', book.id]">EDIT</a>
     <span class="button" (click)="deleteBook(book.id, book.title)">DELETE</span>
   </div>
 </div>

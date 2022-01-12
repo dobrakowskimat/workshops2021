@@ -1,5 +1,5 @@
 <div>
-  <span class="button"(click)="openAddBookModal()">Add Book </span>
+  <a class="button" (click)="openAddBookPage()">Add Book </a>
 </div>
 <div *ngIf="books$ | async as books">
   <div *ngFor="let book of books">

@@ -8,6 +8,7 @@ import {
   MatDialog
 } from '@angular/material/dialog';
 import { EditBookDialogWrapperComponent } from '../edit-book-dialog-wrapper/edit-book-dialog-wrapper.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-list',
@@ -19,7 +20,9 @@ export class BookListComponent implements OnInit {
   booksOutDated$: Observable<void>;
   constructor(
     private readonly bookService: BookService,
-    public matDialog: MatDialog
+    public matDialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.booksOutDated$ = this.bookService.booksOutdated$ as Observable<void>;
 
@@ -41,6 +44,10 @@ export class BookListComponent implements OnInit {
 
   deleteBook(id: number) {
     this.bookService.deleteBook(id).subscribe();
+  }
+
+  openAddBookPage() {
+    this.router.navigate(['add'], {relativeTo: this.route});
   }
 
   openAddBookModal() {

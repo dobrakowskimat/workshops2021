@@ -6,6 +6,8 @@ import { EditBookDialogWrapperComponent } from './edit-book-dialog-wrapper/edit-
 import { BookComponent } from './book/book.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialWidgetsModule } from '../material-widgets/material-widgets.module';
+import { BooksRoutingModule } from './books-routing.module';
+import { EditBookComponent } from './edit-book/edit-book.component';
 
 @NgModule({
   declarations: [
@@ -13,8 +15,9 @@ import { MaterialWidgetsModule } from '../material-widgets/material-widgets.modu
     BookListComponent,
     EditBookFormComponent,
     EditBookDialogWrapperComponent,
+    EditBookComponent,
   ],
-  imports: [SharedModule, MaterialWidgetsModule],
+  imports: [SharedModule, MaterialWidgetsModule, BooksRoutingModule],
   exports: [
     BookComponent,
     BookListComponent,
