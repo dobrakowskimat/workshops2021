@@ -15,9 +15,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { BooksModule } from './books/books.module';
 import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
+import { HideAfterDirective } from './services/hide-after.directive';
+import { HighlightDirective } from './services/highlight.directive';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HideAfterDirective, HighlightDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,

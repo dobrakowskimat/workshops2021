@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialWidgetsModule } from '../material-widgets/material-widgets.module';
 import { BooksRoutingModule } from './books-routing.module';
 import { EditBookComponent } from './edit-book/edit-book.component';
+import { IsbnPipe } from './pipes/isbn.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { EditBookComponent } from './edit-book/edit-book.component';
     EditBookFormComponent,
     EditBookDialogWrapperComponent,
     EditBookComponent,
+    IsbnPipe,
   ],
   imports: [SharedModule, MaterialWidgetsModule, BooksRoutingModule],
   exports: [

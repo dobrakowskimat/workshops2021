@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BookView } from 'src/app/models/book';
 import { EditBookDialogWrapperComponent } from '../edit-book-dialog-wrapper/edit-book-dialog-wrapper.component';
@@ -24,5 +31,9 @@ export class BookComponent implements OnInit {
 
   openEditBookModal(id: number) {
     this.matDialog.open(EditBookDialogWrapperComponent, { data: { id: id } });
+  }
+
+  testClick(): void {
+    console.log('CLICK');
   }
 }

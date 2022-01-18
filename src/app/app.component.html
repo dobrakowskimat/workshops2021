@@ -3,4 +3,15 @@
   <a routerLink="/users">Users</a>
 </div>
 
+
+<div *hideAfter="3000; then afterAdvertisement">VERY NICE ADVERTISEMENT</div>
+<ng-template #afterAdvertisement>
+  <div>CONTENT AFTER ADVERTISEMENT</div>
+</ng-template>
+
+
+<div [appHighlight]="'blue'" [colorAfterMouseLeave]="'red'" >
+  For attribute directive demo
+</div>
+
 <router-outlet></router-outlet>
