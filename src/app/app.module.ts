@@ -18,9 +18,10 @@ import { SharedModule } from './shared/shared.module';
 import { HideAfterDirective } from './services/hide-after.directive';
 import { HighlightDirective } from './services/highlight.directive';
 import { MyIfElseDirective } from './services/my-if-else.directive';
+import { AddBorderOnClickDirective } from './services/add-border-on-click.directive';
 
 @NgModule({
-  declarations: [AppComponent, HideAfterDirective, HighlightDirective, MyIfElseDirective],
+  declarations: [AppComponent, HideAfterDirective, HighlightDirective, MyIfElseDirective, AddBorderOnClickDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,
