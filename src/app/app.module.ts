@@ -17,9 +17,10 @@ import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
 import { HideAfterDirective } from './services/hide-after.directive';
 import { HighlightDirective } from './services/highlight.directive';
+import { MyIfElseDirective } from './services/my-if-else.directive';
 
 @NgModule({
-  declarations: [AppComponent, HideAfterDirective, HighlightDirective],
+  declarations: [AppComponent, HideAfterDirective, HighlightDirective, MyIfElseDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,

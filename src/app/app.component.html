@@ -14,4 +14,19 @@
   For attribute directive demo
 </div>
 
+<p>
+  <button
+    (click)="condition = !condition">
+    Toggle condition to {{condition ? 'false' : 'true'}}
+  </button>
+</p>
+
+<p *appMyIfElse="condition">
+  condition was true
+</p>
+
+<p *appMyIfElse="!condition">
+  condition was false
+</p>
+
 <router-outlet></router-outlet>
