@@ -21,14 +21,20 @@
   </button>
 </p>
 
-<p *appMyIfElse="condition">
-  condition was true
+<p *appMyIfElse="condition; then elseOption">
+  condition 1 was true
 </p>
 
+<ng-template #elseOption>
+  <p>
+    condition 1 was false
+  </p>
+</ng-template>
 
-<p *appMyIfElse="!condition">
-  condition was false
-</p>
+
+<!--<p *appMyIfElse="!condition">-->
+<!--  condition was false-->
+<!--</p>-->
 
 <p appAddBorderOnClick>
     example border
