@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { delay, map, tap } from 'rxjs/operators';
+import { delay, map, shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { SkipLoader } from '../core-http/interceptors/loader.interceptor';
 import { Book } from '../models/book';
 
 @Injectable({
@@ -12,8 +13,8 @@ export class BookService {
   booksOutdated$ = new BehaviorSubject<void>(0 as unknown as void);
   constructor(private readonly httpClient: HttpClient) {}
 
-  getBooks(): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(`${environment.apiUrl}api/Books`);
+  getBooks(skipLoader: boolean = false): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(`api/Books`, {context: new HttpContext().set(SkipLoader, skipLoader) });
   }
 
   getBookById(id: number): Observable<Book> {
@@ -21,13 +22,11 @@ export class BookService {
   }
 
   deleteBook(id: number): Observable<unknown> {
-    return this.httpClient.delete<unknown>(
-      `${environment.apiUrl}api/Books/${id}`
-    );
+    return this.httpClient.delete<unknown>(`api/Books/${id}`);
   }
 
   isTitleDuplicated(title: string): Observable<boolean> {
-    return this.getBooks().pipe(
+    return this.getBooks(true).pipe(
       map((books) => books.some((book) => book.title === title))
     );
   }

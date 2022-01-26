@@ -3,7 +3,7 @@
   <a routerLink="/users">Users</a>
 </div>
 
-
+<!--
 <div *hideAfter="3000; then afterAdvertisement">VERY NICE ADVERTISEMENT</div>
 <ng-template #afterAdvertisement>
   <div>CONTENT AFTER ADVERTISEMENT</div>
@@ -12,6 +12,7 @@
 
 <div [appHighlight]="'blue'" [colorAfterMouseLeave]="'red'" >
   For attribute directive demo
-</div>
-
+</div> -->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true"
+    ><p style="color: white">Loading...</p></ngx-spinner>
 <router-outlet></router-outlet>

@@ -17,6 +17,8 @@ import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
 import { HideAfterDirective } from './services/hide-after.directive';
 import { HighlightDirective } from './services/highlight.directive';
+import { CoreHttpModule } from './core-http/core-http.module';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [AppComponent, HideAfterDirective, HighlightDirective],
@@ -25,6 +27,8 @@ import { HighlightDirective } from './services/highlight.directive';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    CoreHttpModule,
+    NgxSpinnerModule,
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],

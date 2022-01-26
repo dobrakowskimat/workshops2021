@@ -12,9 +12,9 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditBookComponent,
-    resolve: {
-      book: BookResolverService,
-    },
+    // resolve: {
+    //   book: BookResolverService,
+    // },
   },
   {
     path: '',
