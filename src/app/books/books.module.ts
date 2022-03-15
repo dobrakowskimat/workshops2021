@@ -9,6 +9,10 @@ import { MaterialWidgetsModule } from '../material-widgets/material-widgets.modu
 import { BooksRoutingModule } from './books-routing.module';
 import { EditBookComponent } from './edit-book/edit-book.component';
 import { IsbnPipe } from './pipes/isbn.pipe';
+import { StoreModule } from '@ngrx/store';
+import { bookReducer } from './store/book.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { BookEffects } from './store/book.effects';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,13 @@ import { IsbnPipe } from './pipes/isbn.pipe';
     EditBookComponent,
     IsbnPipe,
   ],
-  imports: [SharedModule, MaterialWidgetsModule, BooksRoutingModule],
+  imports: [
+    SharedModule,
+    MaterialWidgetsModule,
+    BooksRoutingModule,
+    StoreModule.forFeature('booksFeature', bookReducer),
+    EffectsModule.forFeature([BookEffects]),
+  ],
   exports: [
     BookComponent,
     BookListComponent,

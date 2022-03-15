@@ -10,11 +10,13 @@ import { Book } from '../models/book';
   providedIn: 'root',
 })
 export class BookService {
-  booksOutdated$ = new BehaviorSubject<void>(0 as unknown as void);
+  // booksOutdated$ = new BehaviorSubject<void>(0 as unknown as void);
   constructor(private readonly httpClient: HttpClient) {}
 
   getBooks(skipLoader: boolean = false): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(`api/Books`, {context: new HttpContext().set(SkipLoader, skipLoader) });
+    return this.httpClient.get<Book[]>(`api/Books`, {
+      context: new HttpContext().set(SkipLoader, skipLoader),
+    });
   }
 
   getBookById(id: number): Observable<Book> {
@@ -37,19 +39,15 @@ export class BookService {
       .pipe(
         delay(500),
         tap(() => {
-          this.booksOutdated$.next();
+          // this.booksOutdated$.next();
         })
       );
   }
 
   editBook(book: Book): Observable<Book> {
-    return this.httpClient
-      .put<Book>(`${environment.apiUrl}api/Books/${book.id}`, book)
-      .pipe(
-        delay(500),
-        tap(() => {
-          this.booksOutdated$.next();
-        })
-      );
+    return this.httpClient.put<Book>(
+      `${environment.apiUrl}api/Books/${book.id}`,
+      book
+    );
   }
 }

@@ -8,9 +8,12 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BookService } from 'src/app/services/book.service';
+import { BookActions } from '../store';
+import { getIsBookEditLoading, getIsBooksLoading } from '../store/book.reducer';
 
 @Component({
   selector: 'app-edit-book-form',
@@ -19,7 +22,7 @@ import { BookService } from 'src/app/services/book.service';
 })
 export class EditBookFormComponent implements OnInit {
   bookForm: FormGroup;
-  isLoading = false;
+  isLoading$: Observable<boolean>;
 
   localTitle: string = '';
 
@@ -27,7 +30,11 @@ export class EditBookFormComponent implements OnInit {
 
   @Output() formSubmitted = new EventEmitter<void>();
 
-  constructor(private bookService: BookService, private fb: FormBuilder) {
+  constructor(
+    private bookService: BookService,
+    private fb: FormBuilder,
+    private store: Store
+  ) {
     this.bookForm = this.fb.group({
       title: [
         '',
@@ -43,12 +50,16 @@ export class EditBookFormComponent implements OnInit {
       isbn: ['', [Validators.required, this.validateIsbnWithParam('123')]],
       tags: this.fb.array([]),
     });
+    this.isLoading$ = this.store.select(getIsBookEditLoading);
+    this.isLoading$.subscribe((a) => console.log('value isLoading' + a));
   }
 
   ngOnInit(): void {
     if (this.id) {
       this.bookService.getBookById(this.id).subscribe((b) => {
-        b.tags.forEach(() => this.addTag());
+        if (b.tags?.length) {
+          b.tags.forEach(() => this.addTag());
+        }
         this.bookForm.patchValue(b);
       });
     }
@@ -78,12 +89,12 @@ export class EditBookFormComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
     if (!!this.id) {
-      this.bookService
-        .editBook({ ...this.bookForm.value, id: this.id })
-        .pipe(tap(() => this.formSubmitted.emit()))
-        .subscribe();
+      this.store.dispatch(
+        BookActions.updateBook({
+          book: { ...this.bookForm.value, id: this.id },
+        })
+      );
     } else {
       this.bookService
         .addBook(this.bookForm.value)

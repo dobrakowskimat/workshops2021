@@ -18,7 +18,11 @@ import { SharedModule } from './shared/shared.module';
 import { HideAfterDirective } from './services/hide-after.directive';
 import { HighlightDirective } from './services/highlight.directive';
 import { CoreHttpModule } from './core-http/core-http.module';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, HideAfterDirective, HighlightDirective],
@@ -29,6 +33,12 @@ import { NgxSpinnerModule } from "ngx-spinner";
     SharedModule,
     CoreHttpModule,
     NgxSpinnerModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 15,
+      logOnly: environment.production,
+    }),
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
