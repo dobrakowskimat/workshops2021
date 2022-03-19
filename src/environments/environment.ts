@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://ng-workshops.azurewebsites.net/',
+  apiUrl: 'https://ng-workshop-2021.azurewebsites.net/',
 };
 
 /*

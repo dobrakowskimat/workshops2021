@@ -1,6 +1,7 @@
 <div class="header">
   <a routerLink="/books">Books</a>
   <a routerLink="/users">Users</a>
+  <strong *ngIf="loggedIn && (displayName$ | async) as displayName">Hello, {{displayName}}</strong>
 </div>
 
 <!--
