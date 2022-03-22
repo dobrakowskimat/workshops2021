@@ -1,0 +1,24 @@
+<form [formGroup]="myForm">
+    <div>
+        <label>Some text input</label>
+        <input type="text" formControlName="someInput">
+    </div>
+
+    <div>
+        <label>Rating</label>
+        <app-rating formControlName="rating"></app-rating>
+    </div>
+
+
+    <div>
+        <button (click)="myForm.disable()">Disable</button>
+        <button (click)="myForm.enable()">Enable</button>
+    </div>
+
+
+    <div>
+        <div>{{myForm.value | json}}</div>
+        <div>Touched: {{myForm.touched | json}}</div>
+    </div>
+
+</form>

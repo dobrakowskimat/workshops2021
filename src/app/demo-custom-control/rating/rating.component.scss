@@ -1,0 +1,12 @@
+mat-icon {
+  cursor: pointer;
+
+  &.selected {
+    color: burlywood;
+  }
+
+  &.disabled {
+    color: gray;
+    cursor: default;
+  }
+}

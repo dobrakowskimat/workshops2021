@@ -1,0 +1,5 @@
+<mat-icon *ngFor="let star of ratingStars; let i = index" 
+    (click)="setRating(i + 1)"
+    [ngClass]="{'selected': star.isSelected, 'disabled': isDisabled}">
+    {{star.iconName}}
+</mat-icon>
